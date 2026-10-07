@@ -53,15 +53,18 @@ try:
     print("[Environment] Running on Google Colab. Mounting Google Drive...")
     drive.mount('/content/drive')
     colab_data_candidates = [
+        Path('/content/drive/MyDrive/pcos_data/clean_data'),
+        Path('/content/drive/MyDrive/pcos_data'),
         Path('/content/drive/MyDrive/clean_data'),
         Path('/content/drive/MyDrive/1CEYq8stRxIpkpGqznIAHoj7pnEbxx7NO'),
         Path('/content/data')
     ]
 except ImportError:
+    colab_data_candidates = []
     print("[Environment] Running locally or standard Jupyter environment.")
 
 # Candidate directories for ovarian dataset
-candidates = [
+candidates = colab_data_candidates + [
     Path("../data"),
     Path("./data"),
     Path("d:/pcos project test/data"),
