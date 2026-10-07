@@ -49,9 +49,8 @@ from PIL import Image
 
 # Google Colab / Local Drive Mount Check
 try:
-    from google.colab import drive
-    print("[Environment] Running on Google Colab. Mounting Google Drive...")
-    drive.mount('/content/drive')
+    import google.colab
+    print("[Environment] Running on Google Colab. Assuming Drive is already mounted.")
     colab_data_candidates = [
         Path('/content/drive/MyDrive/pcos_data/clean_data'),
         Path('/content/drive/MyDrive/pcos_data'),
