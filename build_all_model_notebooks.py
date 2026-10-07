@@ -20,20 +20,68 @@ from src.nb_utils import NotebookBuilder
 
 MODELS = [
     {
+        "nb_name": "04_RESNET50.ipynb",
+        "model_key": "ResNet50",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/ResNet50_best.pth",
+        "description": "Baseline CNN: ResNet50."
+    },
+    {
         "nb_name": "05_DENSENET121.ipynb",
         "model_key": "DenseNet121",
         "lr": 3e-4,
-        "epochs": 30,
+        "epochs": 15,
         "checkpoint": "results/checkpoints/DenseNet121_best.pth",
-        "description": "Baseline CNN: DenseNet-121 with dense feature reuse and 1024-dim bottle-neck projection."
+        "description": "Baseline CNN: DenseNet-121."
+    },
+    {
+        "nb_name": "06_VGG16.ipynb",
+        "model_key": "VGG16",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/VGG16_best.pth",
+        "description": "Baseline CNN: VGG16."
     },
     {
         "nb_name": "07_MOBILENETV2.ipynb",
         "model_key": "MobileNetV2",
         "lr": 3e-4,
-        "epochs": 30,
+        "epochs": 15,
         "checkpoint": "results/checkpoints/MobileNetV2_best.pth",
-        "description": "Lightweight Baseline: MobileNet-V2 with inverted residual bottleneck blocks."
+        "description": "Lightweight Baseline: MobileNet-V2."
+    },
+    {
+        "nb_name": "08_EFFICIENTNETB0.ipynb",
+        "model_key": "EfficientNetB0",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/EfficientNetB0_best.pth",
+        "description": "Efficient Baseline: EfficientNet-B0."
+    },
+    {
+        "nb_name": "09_CONVNEXT_TINY_V6.ipynb",
+        "model_key": "ConvNeXt_Tiny_V6",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/ConvNeXt_Tiny_V6_best.pth",
+        "description": "Modern CNN: ConvNeXt-Tiny."
+    },
+    {
+        "nb_name": "10_SWIN_TINY.ipynb",
+        "model_key": "Swin_Tiny",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/Swin_Tiny_best.pth",
+        "description": "Vision Transformer: Swin-Tiny."
+    },
+    {
+        "nb_name": "11_VIT_B16.ipynb",
+        "model_key": "ViT_B16",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/ViT_B16_best.pth",
+        "description": "Vision Transformer: ViT-B/16."
     }
 ]
 

@@ -31,8 +31,14 @@ def get_file_sha256(filepath: str) -> str:
 
 def evaluate_split(split_name: str, loader: DataLoader, device: torch.device):
     checkpoints = [
+        ("ResNet50", "ResNet50", "results/checkpoints/ResNet50_best.pth", "Direct (224x224)"),
         ("DenseNet-121", "DenseNet121", "results/checkpoints/DenseNet121_best.pth", "Direct (224x224)"),
-        ("MobileNet-V2", "MobileNetV2", "results/checkpoints/MobileNetV2_best.pth", "Direct (224x224)")
+        ("VGG16", "VGG16", "results/checkpoints/VGG16_best.pth", "Direct (224x224)"),
+        ("MobileNet-V2", "MobileNetV2", "results/checkpoints/MobileNetV2_best.pth", "Direct (224x224)"),
+        ("EfficientNet-B0", "EfficientNetB0", "results/checkpoints/EfficientNetB0_best.pth", "Direct (224x224)"),
+        ("ConvNeXt-Tiny", "ConvNeXt_Tiny_V6", "results/checkpoints/ConvNeXt_Tiny_V6_best.pth", "Direct (224x224)"),
+        ("Swin-Tiny", "Swin_Tiny", "results/checkpoints/Swin_Tiny_best.pth", "Direct (224x224)"),
+        ("ViT-B16", "ViT_B16", "results/checkpoints/ViT_B16_best.pth", "Direct (224x224)")
     ]
 
     records = []
