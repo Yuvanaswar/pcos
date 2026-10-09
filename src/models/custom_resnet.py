@@ -60,11 +60,6 @@ class CBAMBlock(nn.Module):
         return x
 
 def inject_se_into_resnet(model):
-    for name, module in model.named_modules():
-        if isinstance(module, torch.nn.modules.conv.Conv2d) and name.endswith('conv3'):
-            # This is a bit hacky, better to wrap the Bottleneck
-            pass
-    # Proper injection into Bottleneck
     from torchvision.models.resnet import Bottleneck
     for name, module in model.named_children():
         if isinstance(module, nn.Sequential):
@@ -72,9 +67,10 @@ def inject_se_into_resnet(model):
                 if isinstance(block, Bottleneck):
                     # inject SE right after conv3/bn3 before addition
                     se = SEBlock(block.bn3.num_features)
+                    # Register the module so it gets moved to GPU properly
+                    setattr(block, 'se_block', se)
                     # We monkey-patch the forward method of the block
-                    old_forward = block.forward
-                    def new_forward(x, b=block, se_block=se.to(next(block.parameters()).device)):
+                    def new_forward(x, b=block):
                         identity = b.downsample(x) if b.downsample is not None else x
                         out = b.conv1(x)
                         out = b.bn1(out)
@@ -84,7 +80,7 @@ def inject_se_into_resnet(model):
                         out = b.relu(out)
                         out = b.conv3(out)
                         out = b.bn3(out)
-                        out = se_block(out)  # INJECT SE HERE
+                        out = getattr(b, 'se_block')(out)  # INJECT SE HERE
                         out += identity
                         out = b.relu(out)
                         return out
@@ -98,8 +94,9 @@ def inject_cbam_into_resnet(model):
             for i, block in enumerate(module):
                 if isinstance(block, Bottleneck):
                     cbam = CBAMBlock(block.bn3.num_features)
-                    old_forward = block.forward
-                    def new_forward(x, b=block, cbam_block=cbam.to(next(block.parameters()).device)):
+                    # Register the module so it gets moved to GPU properly
+                    setattr(block, 'cbam_block', cbam)
+                    def new_forward(x, b=block):
                         identity = b.downsample(x) if b.downsample is not None else x
                         out = b.conv1(x)
                         out = b.bn1(out)
@@ -109,7 +106,7 @@ def inject_cbam_into_resnet(model):
                         out = b.relu(out)
                         out = b.conv3(out)
                         out = b.bn3(out)
-                        out = cbam_block(out)  # INJECT CBAM HERE
+                        out = getattr(b, 'cbam_block')(out)  # INJECT CBAM HERE
                         out += identity
                         out = b.relu(out)
                         return out
