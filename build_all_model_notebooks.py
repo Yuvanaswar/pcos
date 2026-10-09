@@ -315,10 +315,10 @@ optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay
 
 if "DualMarginFMFLoss" in MODEL_NAME:
     criterion = DualMarginFMFLoss(gamma=2.0)
-    print(f"Using DualMarginFMFLoss for {MODEL_NAME}")
+    print(f"Using DualMarginFMFLoss for {{MODEL_NAME}}")
 elif "FMFLoss" in MODEL_NAME:
     criterion = FMFLoss(gamma=2.0)
-    print(f"Using FMFLoss for {MODEL_NAME}")
+    print(f"Using FMFLoss for {{MODEL_NAME}}")
 elif "ConvNeXt" in MODEL_NAME:
     criterion = FollicleAwareFocalLoss(gamma=2.0)
     print("Using custom FollicleAwareFocalLoss for ConvNeXt-Tiny V6")
