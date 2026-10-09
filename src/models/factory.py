@@ -73,6 +73,48 @@ MODEL_REGISTRY = {
         "target_layer_name": "encoder.layers.encoder_layer_11.ln_1",
         "head_attr": "heads.head",
         "in_features": 768
+    },
+    "InceptionV3": {
+        "constructor": lambda weights=None: models.inception_v3(weights=weights, aux_logits=False),
+        "weights": models.Inception_V3_Weights.DEFAULT,
+        "target_layer_name": "Mixed_7c",
+        "head_attr": "fc",
+        "in_features": 2048
+    },
+    "EfficientNetV2B0": {
+        "constructor": models.efficientnet_v2_s,
+        "weights": models.EfficientNet_V2_S_Weights.DEFAULT,
+        "target_layer_name": "features.7",
+        "head_attr": "classifier.1",
+        "in_features": 1280
+    },
+    "SE-ResNet50": {
+        "constructor": lambda weights=None: __import__('src.models.custom_resnet', fromlist=['']).get_se_resnet50(pretrained=(weights is not None)),
+        "weights": models.ResNet50_Weights.DEFAULT,
+        "target_layer_name": "layer4",
+        "head_attr": "fc",
+        "in_features": 2048
+    },
+    "CBAM-ResNet50": {
+        "constructor": lambda weights=None: __import__('src.models.custom_resnet', fromlist=['']).get_cbam_resnet50(pretrained=(weights is not None)),
+        "weights": models.ResNet50_Weights.DEFAULT,
+        "target_layer_name": "layer4",
+        "head_attr": "fc",
+        "in_features": 2048
+    },
+    "SE-ResNet50-FMFLoss": {
+        "constructor": lambda weights=None: __import__('src.models.custom_resnet', fromlist=['']).get_se_resnet50(pretrained=(weights is not None)),
+        "weights": models.ResNet50_Weights.DEFAULT,
+        "target_layer_name": "layer4",
+        "head_attr": "fc",
+        "in_features": 2048
+    },
+    "SE-ResNet50-DualMarginFMFLoss": {
+        "constructor": lambda weights=None: __import__('src.models.custom_resnet', fromlist=['']).get_se_resnet50(pretrained=(weights is not None)),
+        "weights": models.ResNet50_Weights.DEFAULT,
+        "target_layer_name": "layer4",
+        "head_attr": "fc",
+        "in_features": 2048
     }
 }
 

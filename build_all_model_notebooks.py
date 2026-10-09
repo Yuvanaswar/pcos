@@ -82,6 +82,54 @@ MODELS = [
         "epochs": 15,
         "checkpoint": "results/checkpoints/ViT_B16_best.pth",
         "description": "Vision Transformer: ViT-B/16."
+    },
+    {
+        "nb_name": "12_INCEPTIONV3.ipynb",
+        "model_key": "InceptionV3",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/InceptionV3_best.pth",
+        "description": "InceptionV3 CNN."
+    },
+    {
+        "nb_name": "13_EFFICIENTNETV2.ipynb",
+        "model_key": "EfficientNetV2B0",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/EfficientNetV2B0_best.pth",
+        "description": "EfficientNetV2 Baseline."
+    },
+    {
+        "nb_name": "14_SERESNET50.ipynb",
+        "model_key": "SE-ResNet50",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/SE_ResNet50_best.pth",
+        "description": "Squeeze-and-Excitation ResNet50."
+    },
+    {
+        "nb_name": "15_CBAMRESNET50.ipynb",
+        "model_key": "CBAM-ResNet50",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/CBAM_ResNet50_best.pth",
+        "description": "CBAM Attention ResNet50."
+    },
+    {
+        "nb_name": "16_SERESNET50_FMF.ipynb",
+        "model_key": "SE-ResNet50-FMFLoss",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/SE_ResNet50_FMFLoss_best.pth",
+        "description": "SE-ResNet50 with FMF Loss."
+    },
+    {
+        "nb_name": "17_SERESNET50_DUAL.ipynb",
+        "model_key": "SE-ResNet50-DualMarginFMFLoss",
+        "lr": 3e-4,
+        "epochs": 15,
+        "checkpoint": "results/checkpoints/SE_ResNet50_DualMarginFMFLoss_best.pth",
+        "description": "SE-ResNet50 with Dual Margin FMF Loss."
     }
 ]
 
@@ -119,7 +167,7 @@ from torch.utils.data import DataLoader
 
 from src.models.factory import create_model
 from src.dataset import get_dataloaders
-from src.losses import FollicleAwareFocalLoss
+from src.losses import FollicleAwareFocalLoss, FMFLoss, DualMarginFMFLoss
 from src.evaluate import evaluate_model, plot_confusion_matrix, plot_roc_curves, CLASS_NAMES
 from src.gradcam import GradCAM, overlay_cam_on_image
 
@@ -265,8 +313,13 @@ def run_validation(model, loader, criterion, device):
     nb.add_code(rf"""# CELL 11: Training loop
 optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=1e-2)
 
-# Use FollicleAwareFocalLoss for ConvNeXt-Tiny V6, CrossEntropy for baseline CNNs/Transformers
-if "ConvNeXt" in MODEL_NAME:
+if "DualMarginFMFLoss" in MODEL_NAME:
+    criterion = DualMarginFMFLoss(gamma=2.0)
+    print(f"Using DualMarginFMFLoss for {MODEL_NAME}")
+elif "FMFLoss" in MODEL_NAME:
+    criterion = FMFLoss(gamma=2.0)
+    print(f"Using FMFLoss for {MODEL_NAME}")
+elif "ConvNeXt" in MODEL_NAME:
     criterion = FollicleAwareFocalLoss(gamma=2.0)
     print("Using custom FollicleAwareFocalLoss for ConvNeXt-Tiny V6")
 else:

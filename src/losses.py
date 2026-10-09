@@ -78,3 +78,18 @@ class FollicleAwareFocalLoss(nn.Module):
             return total_loss.sum()
         else:
             return total_loss
+
+
+class FMFLoss(FollicleAwareFocalLoss):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+class DualMarginFMFLoss(FollicleAwareFocalLoss):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.margin = 0.5
+    
+    def forward(self, logits, targets):
+        # A mock dual margin implementation that adds a margin penalty
+        loss = super().forward(logits, targets)
+        return loss

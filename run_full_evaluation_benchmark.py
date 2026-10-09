@@ -38,7 +38,13 @@ def evaluate_split(split_name: str, loader: DataLoader, device: torch.device):
         ("EfficientNet-B0", "EfficientNetB0", "results/checkpoints/EfficientNetB0_best.pth", "Direct (224x224)"),
         ("ConvNeXt-Tiny", "ConvNeXt_Tiny_V6", "results/checkpoints/ConvNeXt_Tiny_V6_best.pth", "Direct (224x224)"),
         ("Swin-Tiny", "Swin_Tiny", "results/checkpoints/Swin_Tiny_best.pth", "Direct (224x224)"),
-        ("ViT-B16", "ViT_B16", "results/checkpoints/ViT_B16_best.pth", "Direct (224x224)")
+        ("ViT-B16", "ViT_B16", "results/checkpoints/ViT_B16_best.pth", "Direct (224x224)"),
+        ("InceptionV3", "InceptionV3", "results/checkpoints/InceptionV3_best.pth", "Direct (224x224)"),
+        ("EfficientNetV2B0", "EfficientNetV2B0", "results/checkpoints/EfficientNetV2B0_best.pth", "Direct (224x224)"),
+        ("SE-ResNet50", "SE-ResNet50", "results/checkpoints/SE_ResNet50_best.pth", "Direct (224x224)"),
+        ("CBAM-ResNet50", "CBAM-ResNet50", "results/checkpoints/CBAM_ResNet50_best.pth", "Direct (224x224)"),
+        ("SE-ResNet50-FMFLoss", "SE-ResNet50-FMFLoss", "results/checkpoints/SE_ResNet50_FMFLoss_best.pth", "Direct (224x224)"),
+        ("SE-ResNet50-Dual", "SE-ResNet50-DualMarginFMFLoss", "results/checkpoints/SE_ResNet50_DualMarginFMFLoss_best.pth", "Direct (224x224)")
     ]
 
     records = []
